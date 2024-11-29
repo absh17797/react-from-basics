@@ -10,7 +10,7 @@ const Profile = () => {
     profession: 'WebSite DEveloper',
     hiddenProfession: 'Tourists',
   });
-  alert("From Prile Comp")
+  // alert("From Profile Comp")
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>

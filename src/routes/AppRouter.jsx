@@ -30,11 +30,14 @@ import Contact from '../pages/ContactUs';
 import Dashboard from '../pages/Dashboard';
 import Counter from '../pages/Counter';
 import Profile from '../components/Profile/Profile';
+import ToDoList from '../components/ToDo/ToDoList';
+import ToDoAddUpdate from '../components/ToDo/ToDoAddUpdate';
 
 
 const AppRouter = () => {
   return (
     <Router>
+      {/* <Header /> */}
       <Navbar />
       <Routes>
         {/* Public Routes */}
@@ -43,10 +46,14 @@ const AppRouter = () => {
         <Route path="/contact" element={<PublicRoutes><Contact /></PublicRoutes>} />
         <Route path="/counter" element={<PublicRoutes><Counter /></PublicRoutes>} />
         <Route path="/profile" element={<PublicRoutes><Profile /></PublicRoutes>} />
+        <Route path="/todos" element={<PublicRoutes><ToDoList /></PublicRoutes>} />
+        <Route path="/todos/add" element={<PublicRoutes><ToDoAddUpdate /></PublicRoutes>} />
+        <Route path="/todos/edit/:id" element={<PublicRoutes><ToDoAddUpdate /></PublicRoutes>} />
 
         {/* Protected Routes */}
         <Route path="/admin" element={<ProtectedRoutes role="admin"><Dashboard /></ProtectedRoutes>} />
       </Routes>
+      {/* <Footer /> */}
     </Router>
   );
 };

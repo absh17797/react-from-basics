@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Details = ({ name, age, location, profession }) => {
-  alert("From Details Comp")
+  // alert("From Details Comp")
 
   return (
     <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
