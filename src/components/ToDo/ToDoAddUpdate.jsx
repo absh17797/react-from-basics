@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AddEditTodo = () => {
     const { id } = useParams();
@@ -10,10 +11,10 @@ const AddEditTodo = () => {
         priority: 'Low',
         type: '',
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(name, value)
         setTodo({
             ...todo,
             [name]: value,
@@ -22,7 +23,8 @@ const AddEditTodo = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form Submitted:', todo);
+        if (!Object.keys(todo).length) return;
+        navigate("/todos", { state: {...todo} });
     };
 
     return (
@@ -108,6 +110,8 @@ const AddEditTodo = () => {
                     {id ? 'Update' : 'Add'} Todo
                 </button>
             </form>
+            {/* React does not print objects directly */}
+            {/* <div> {JSON.stringify(todo)} </div> */}
         </div>
     );
 };

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const TodoList = () => {
-    const todos = [
-        { id: 1, title: 'Learn React', status: 'Completed' },
-        { id: 2, title: 'Build a Todo App', status: 'Pending' },
-    ];
+
+    const location = useLocation();
+    const [todos, setTodos] = useState([
+        { id: 1, title: 'Learn React', description: 'Learn React', priority: "High", type: "Work", status: 'Completed' },
+        { id: 2, title: 'Build a Todo App', description: 'Build a Todo App', priority: "High", type: "Work", status: 'Pending' },
+    ]);
+
+    useEffect(() => {
+        console.log("location.state=>",location.state)
+        if (location?.state) {
+            setTodos((prevTodos) => [...prevTodos, Object.assign(location?.state,{id: todos.length + 1 })]);
+        }
+    }, [location.state]);
 
     return (
         <div className="container my-5">
@@ -15,15 +25,21 @@ const TodoList = () => {
                     <tr>
                         <th>#</th>
                         <th>Title</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Type</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {todos.map((todo, index) => (
-                        <tr key={todo.id}>
+                        <tr key={index+1}>
                             <td>{index + 1}</td>
-                            <td>{todo.title}</td>
+                            <td>{todo?.title}</td>
+                            <td>{todo?.description}</td>
+                            <td>{todo?.priority}</td>
+                            <td>{todo?.type}</td>
                             <td>
                                 <span
                                     className={`badge ${todo.status === 'Completed' ? 'bg-success' : 'bg-warning'
