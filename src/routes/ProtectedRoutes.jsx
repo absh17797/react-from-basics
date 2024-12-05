@@ -13,10 +13,7 @@ const ProtectedRoutes = ({ children, role }) => {
   useEffect(() => {
     // alert("1")
     if (user && user.role !== role) {
-      toast.error('You are forbidden to access this route!', {
-        position: toast.POSITION.TOP_CENTER,
-      });
-
+      toast.error('You are forbidden to access this route!');
       // Delay redirection to allow toast to show
       const timer = setTimeout(() => setIsForbidden(true), 3000);
       return () => clearTimeout(timer); // Cleanup timer on component unmount
@@ -27,7 +24,16 @@ const ProtectedRoutes = ({ children, role }) => {
   if (user && user.role === role) {
     return children;
   }
-
+  toast.warning('Only logged in user can protected routes',{
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
   return <Navigate to="/" />;
 };
 
