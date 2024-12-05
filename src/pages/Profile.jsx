@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import ProfileDetails from './ProfileDetails'; // Import Details Component
+import ProfileDetails from '../components/Profile/ProfileDetails'; // Import Details Component
 
 const Profile = () => {
   // State to hold user details
   const [customeData, setcustomeData] = useState('Profile Component')
-  const [user, setUser] = useState({
+  const user = {
     name: 'Abhishek',
     age: 28,
     location: 'Ludhiana',
     profession: 'WebSite DEveloper',
     hiddenProfession: 'Tourists',
-  });
+  };
   // alert("From Profile Comp")
   // setcustomeData("NEw Profile")
   return (

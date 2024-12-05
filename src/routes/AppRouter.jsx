@@ -28,8 +28,8 @@ import Home from '../pages/Home';
 import AboutUs from '../pages/AboutUs';
 import Contact from '../pages/ContactUs';
 import Dashboard from '../pages/Dashboard';
-import Counter from '../pages/Counter';
-import Profile from '../components/Profile/Profile';
+import Counter from '../components/Counter';
+import Profile from '../pages/Profile';
 import ToDoList from '../components/ToDo/ToDoList';
 import ToDoAddUpdate from '../components/ToDo/ToDoAddUpdate';
 

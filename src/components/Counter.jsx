@@ -35,13 +35,30 @@ const Counter = () => {
       setdirectCounter(directCounter + 1); // Directly use the current counter value
       setprevCounter((prev) => prev + 1); // Use previous state
     };
-    
+    const decrementBoth = () => {
+      setdirectCounter(directCounter - 1); // Directly use the current counter value
+      setprevCounter((prev) => prev - 1); // Use previous state
+    };
+    const validationMessage = "Maximum Value for counter reached";
+    const maxCounter = 5;
+
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
         <h1>Direct Counter: {directCounter}</h1>
         <h1>Prev Counter: {prevCounter}</h1>
-        <button onClick={incrementBoth} style={{ margin: '10px', padding: '10px' }}>
+        <button 
+          onClick={incrementBoth} 
+          style={{ margin: '10px', padding: '10px' }}
+          disabled = {(directCounter  > maxCounter || prevCounter > maxCounter)}  
+        >
           Increment (Direct and Prev Update)
+        </button>
+        { (directCounter > maxCounter) && (<span style={{ color: 'red', marginTop: '10px' }}>{validationMessage}</span>)}
+        <button 
+          onClick={decrementBoth} 
+          disabled = {(directCounter === 0 || prevCounter === 0)}  
+          style={{ margin: '10px', padding: '10px' }}>
+          Decrement (Direct and Prev Update)
         </button>
       </div>
     );
