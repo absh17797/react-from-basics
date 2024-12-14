@@ -70,6 +70,14 @@ const Navbar = () => {
             Dashboard
           </Link>
         </li>
+
+        <li className="nav-item fw-bold">
+          <Link className="nav-link text-light fw-semibold" to="/products">
+            Products
+          </Link>
+        </li>
+
+        
       </ul>
 
       {/* Optional Call to Action Button */}
