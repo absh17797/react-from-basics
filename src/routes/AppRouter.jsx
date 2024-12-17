@@ -33,8 +33,7 @@ import Profile from '../pages/Profile';
 import ToDoList from '../components/ToDo/ToDoList';
 import ToDoAddUpdate from '../components/ToDo/ToDoAddUpdate';
 import Products from '../pages/Products';
-import Cart from '../components/CartListing';
-import { CartProvider } from '../context/CartContext';
+import { Signup } from '../pages/Signup';
 
 
 const AppRouter = () => {
@@ -73,6 +72,8 @@ const AppRouter = () => {
 
         {/* Assignment 3 - Use Context */}
         <Route path="/products" element={<PublicRoutes><Products /></PublicRoutes>} />
+        <Route path="/signUp" element={<PublicRoutes><Signup /></PublicRoutes>} />
+        Signup
 
         {/* Protected Routes */}
         <Route path="/admin" element={<ProtectedRoutes role="admin"><Dashboard /></ProtectedRoutes>} />

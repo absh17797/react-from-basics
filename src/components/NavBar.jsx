@@ -29,7 +29,7 @@ const Navbar = () => {
     {/* Navbar Links */}
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav ms-auto">
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link text-light fw-semibold" to="/">
             Home
           </Link>
@@ -43,7 +43,7 @@ const Navbar = () => {
           <Link className="nav-link text-light fw-semibold" to="/contact">
             Contact Us
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link text-light fw-semibold" to="/counter">
             Counter
@@ -59,11 +59,11 @@ const Navbar = () => {
             ToDos
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link text-light fw-semibold" to="/todos/add">
             Add ToDos
           </Link>
-        </li>
+        </li> */}
 
         <li className="nav-item fw-bold">
           <Link className="nav-link text-light fw-semibold" to="/admin">
@@ -77,6 +77,12 @@ const Navbar = () => {
           </Link>
         </li>
 
+        <li className="nav-item fw-bold">
+          <Link className="nav-link text-light fw-semibold" to="/signUp">
+            Sign Up
+          </Link>
+        </li>
+        
         
       </ul>
 
