@@ -236,7 +236,7 @@ export const Signup = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="text-danger">{"errors?.hobbies?.message"}</div>
+                    <div className="text-danger">{errors?.hobbies?.message}</div>
                 </div>
 
 
