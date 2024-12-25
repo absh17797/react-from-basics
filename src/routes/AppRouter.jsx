@@ -34,6 +34,7 @@ import ToDoList from '../components/ToDo/ToDoList';
 import ToDoAddUpdate from '../components/ToDo/ToDoAddUpdate';
 import Products from '../pages/Products';
 import { Signup } from '../pages/Signup';
+import StudentForm from '../pages/StudentForm';
 
 
 const AppRouter = () => {
@@ -73,7 +74,7 @@ const AppRouter = () => {
         {/* Assignment 3 - Use Context */}
         <Route path="/products" element={<PublicRoutes><Products /></PublicRoutes>} />
         <Route path="/signUp" element={<PublicRoutes><Signup /></PublicRoutes>} />
-        Signup
+        <Route path="/studentForm" element={<PublicRoutes><StudentForm /></PublicRoutes>} />
 
         {/* Protected Routes */}
         <Route path="/admin" element={<ProtectedRoutes role="admin"><Dashboard /></ProtectedRoutes>} />

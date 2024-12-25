@@ -82,6 +82,11 @@ const Navbar = () => {
             Sign Up
           </Link>
         </li>
+        <li className="nav-item fw-bold">
+          <Link className="nav-link text-light fw-semibold" to="/studentForm">
+            Student Form
+          </Link>
+        </li>
         
         
       </ul>
