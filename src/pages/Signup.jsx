@@ -1,8 +1,10 @@
-import React , {useState, useMemo} from "react";
+import React, { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Constants from "../utils/constants"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Signup = () => {
     const validationSchema = yup.object({
@@ -46,7 +48,50 @@ export const Signup = () => {
             )
             .min(1, "At least one hobby must be selected")
             .required("Hobbies are required"),
+        dob: yup
+            .date()
+            .nullable()
+            .typeError("Invalid date")
+            .required("Date of Birth is required")
+            .max(new Date(), "Date of Birth cannot be in the future"),
 
+        color: yup
+            .string()
+            .required("Color is required")
+            .matches(/^#[0-9A-Fa-f]{6}$/, "Invalid color format"),
+        file: yup
+            .mixed()
+            .required("File upload is required")
+            .test("fileSize", "File is too large", (value) =>
+                value && value[0] ? value[0].size <= 5 * 1024 * 1024 : false
+            )
+            .test("fileType", "Unsupported file type", (value) =>
+                value && value[0]
+                    ? ["image/jpeg", "image/png", "application/pdf"].includes(
+                        value[0].type
+                    )
+                    : false
+            ),
+        range: yup
+            .number()
+            .required("Priority is required")
+            .min(1, "Minimum value is 1")
+            .max(100, "Maximum value is 100"),
+        time: yup
+            .string()
+            .required("Time is required"),
+        search: yup
+            .string()
+            .required("Search query is required")
+            .min(3, "Minimum length is 3 characters"),
+        url: yup
+            .string()
+            .required("URL is required")
+            .url("Invalid URL format"),
+        tel: yup
+            .string()
+            .required("Phone number is required")
+            .matches(/^[0-9]{10}$/, "Enter a valid 10-digit phone number"),
     });
 
     const {
@@ -58,6 +103,8 @@ export const Signup = () => {
     } = useForm({
         resolver: yupResolver(validationSchema),
     });
+
+    const [dob, setDob] = useState(null);
 
     const onSubmit = (data) => {
         console.log("Form Submitted:", data);
@@ -76,23 +123,18 @@ export const Signup = () => {
             // Remove the hobby object
             updatedHobbies = hobbies?.filter((hobby) => hobby?.title !== value);
         }
-        console.log("updatedHobbies ==>",updatedHobbies)
+        console.log("updatedHobbies ==>", updatedHobbies)
 
         setHobbies(updatedHobbies); // Update local state
         setValue("hobbies", updatedHobbies); // Update React Hook Form state
     };
-
-    // const isHobbyChecked = (hobby) => {
-    //     console.log("hobby ==>",hobby)
-    //     return hobbies.some((item) => item.title === hobby);
-    // };
 
     // NTD - used memo because this function was re-rendering with all the hobbies in array  
     const checkedHobbies = useMemo(() => {
         const currentHobbies = getValues("hobbies") || [];
         return new Set(currentHobbies.map((item) => item?.title));
     }, [getValues("hobbies")]);
-    
+
     const isHobbyChecked = (hobby) => {
         return checkedHobbies?.has(hobby);
     };
@@ -213,10 +255,11 @@ export const Signup = () => {
                     <div className="invalid-feedback">{errors?.comments?.message}</div>
                 </div>
 
+                {/* hobbies (Multi Select) */}
                 <div className="mb-3">
                     <label className="form-label">Hobbies</label>
                     <div>
-                        {Constants.hobbies.map((hobby,index) => (
+                        {Constants.hobbies.map((hobby, index) => (
                             <div key={hobby} className="form-check form-check-inline">
                                 <input
                                     className="form-check-input"
@@ -228,7 +271,7 @@ export const Signup = () => {
                                     onChange={handleHobbyChange}
                                     checked={isHobbyChecked(hobby)}
                                     key={`${hobby}_${index}`}
-                                    // NTD - tried adding ID to prevent rerendering of isHobbyChecked this function but didn't help
+                                // NTD - tried adding ID to prevent rerendering of isHobbyChecked this function but didn't help
                                 />
                                 <label className="form-check-label" htmlFor={hobby}>
                                     {hobby}
@@ -239,6 +282,135 @@ export const Signup = () => {
                     <div className="text-danger">{errors?.hobbies?.message}</div>
                 </div>
 
+                {/* Date of Birth */}
+                <div className="mb-3">
+                    <label className="form-label">Date of Birth</label>
+                    <DatePicker
+                        selected={dob}
+                        onChange={(date) => {
+                            setDob(date);
+                            setValue("dob", date, { shouldValidate: true });
+                        }}
+                        className={`form-control ${errors?.dob ? "is-invalid" : ""}`}
+                        placeholderText="Select your date of birth"
+                        dateFormat="yyyy-MM-dd"
+                        maxDate={new Date()}
+                        showYearDropdown
+                        showMonthDropdown
+                        dropdownMode="select"
+                    />
+                    <div className="invalid-feedback">{errors?.dob?.message}</div>
+                </div>
+
+                {/* Color Picker */}
+                <div className="mb-3">
+                    <label htmlFor="color" className="form-label">
+                        Select Color
+                    </label>
+                    <input
+                        type="color"
+                        id="color"
+                        className="form-control form-control-color"
+                        {...register("color")}
+                    />
+                    {errors.color && (
+                        <small className="text-danger">{errors.color.message}</small>
+                    )}
+                </div>
+
+                {/* File Input */}
+                <div className="mb-3">
+                    <label htmlFor="file" className="form-label">
+                        Upload File
+                    </label>
+                    <input
+                        type="file"
+                        id="file"
+                        className="form-control"
+                        {...register("file")}
+                    />
+                    {errors.file && (
+                        <small className="text-danger">{errors.file.message}</small>
+                    )}
+                </div>
+
+                {/* Range Slider */}
+                <div className="mb-3">
+                    <label htmlFor="range" className="form-label">
+                        Priority (1 to 100)
+                    </label>
+                    <input
+                        type="range"
+                        id="range"
+                        className="form-range"
+                        min="1"
+                        max="100"
+                        {...register("range")}
+                    />
+                    {errors.range && (
+                        <small className="text-danger">{errors.range.message}</small>
+                    )}
+                </div>
+
+                {/* Time Input */}
+                <div className="mb-3">
+                    <label htmlFor="time" className="form-label">
+                        Due Time
+                    </label>
+                    <input
+                        type="time"
+                        id="time"
+                        className="form-control"
+                        {...register("time")}
+                    />
+                    {errors.time && (
+                        <small className="text-danger">{errors.time.message}</small>
+                    )}
+                </div>
+
+                {/* Search Input */}
+                <div className="mb-3">
+                    <label htmlFor="search" className="form-label">
+                        Search Task
+                    </label>
+                    <input
+                        type="search"
+                        id="search"
+                        className="form-control"
+                        {...register("search")}
+                    />
+                    {errors.search && (
+                        <small className="text-danger">{errors.search.message}</small>
+                    )}
+                </div>
+
+                {/* URL Input */}
+                <div className="mb-3">
+                    <label htmlFor="url" className="form-label">
+                        Related URL
+                    </label>
+                    <input
+                        type="url"
+                        id="url"
+                        className="form-control"
+                        {...register("url")}
+                    />
+                    {errors.url && <small className="text-danger">{errors.url.message}</small>}
+                </div>
+
+                {/* Telephone Input */}
+                <div className="mb-3">
+                    <label htmlFor="tel" className="form-label">
+                        Contact Number
+                    </label>
+                    <input
+                        type="tel"
+                        id="tel"
+                        className="form-control"
+                        {...register("tel")}
+                    />
+                    {errors.tel && <small className="text-danger">{errors.tel.message}</small>}
+                </div>
 
                 {/* Agree Checkbox */}
                 <div className="mb-3 form-check">

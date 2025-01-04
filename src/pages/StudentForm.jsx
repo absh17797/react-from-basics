@@ -47,8 +47,7 @@ const StudentForm = () => {
     control,
     name: "qualifications",
   });
-console.log("fields =>",fields)
-console.log("errors =>",errors)
+  console.log("errors =>",errors)
   const onSubmit = (data) => {
     console.log("Submitted Data:", data);
     alert("Form Submitted Successfully!");
@@ -101,9 +100,10 @@ console.log("errors =>",errors)
               <label className="form-label">Date</label>
 
               <DatePicker
-                selected={(field.date && new Date(field.date)) || null} // Use field.date instead of fields[index].date
+                selected={(fields[index]?.date && new Date(fields[index].date)) || null}
                 onChange={(date) => {
                   setValue(`qualifications.${index}.date`, date, { shouldValidate: true });
+                  fields[index].date = date; // Directly update the `fields` array
                 }}
                 className={`form-control ${errors.qualifications?.[index]?.date ? "is-invalid" : ""}`}
                 placeholderText="Select a date"
