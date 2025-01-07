@@ -6,7 +6,16 @@ import Constants from "../utils/constants"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useDispatch, useSelector } from 'react-redux';
+// import { signup } from '../features/auth/authSlice';
+import { signupUser } from '../features/auth/authActions';
+
 export const Signup = () => {
+    
+    const dispatch = useDispatch();
+    const { status, error } = useSelector((state) => state.auth);
+    const user = useSelector((state) => state.auth.user);  // Access user data from the store
+
     const validationSchema = yup.object({
         fullName: yup
             .string()
@@ -107,8 +116,12 @@ export const Signup = () => {
     const [dob, setDob] = useState(null);
 
     const onSubmit = (data) => {
+        delete data.file
+        data.dob = new Date(data.dob).toISOString()
         console.log("Form Submitted:", data);
         alert("Form Submitted Successfully!");
+        // dispatch(signup(data));
+        dispatch(signupUser(data));  // Dispatch the async action to make the API call
     };
 
     // Local state to manage the hobbies array as we need to make it custom 
@@ -431,6 +444,9 @@ export const Signup = () => {
                     Submit
                 </button>
             </form>
+            <div>
+                User data from Redux store  {JSON.stringify(user)}; 
+            </div>
         </div>
     );
 };
