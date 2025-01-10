@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useDispatch, useSelector } from 'react-redux';
-// import { signup } from '../features/auth/authSlice';
+import { signup } from '../features/auth/authSlice';
 import { signupUser } from '../features/auth/authActions';
 
 export const Signup = () => {
@@ -120,7 +120,7 @@ export const Signup = () => {
         data.dob = new Date(data.dob).toISOString()
         console.log("Form Submitted:", data);
         alert("Form Submitted Successfully!");
-        // dispatch(signup(data));
+        dispatch(signup(data));
         dispatch(signupUser(data));  // Dispatch the async action to make the API call
     };
 
