@@ -10,11 +10,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../features/auth/authSlice';
 import { signupUser } from '../features/auth/authActions';
 
+import { useAddUserMutation, useGetUsersQuery } from '../features/users/userApi';
+
 export const Signup = () => {
     
     const dispatch = useDispatch();
     const { status, error } = useSelector((state) => state.auth);
     const user = useSelector((state) => state.auth.user);  // Access user data from the store
+
+
+    const [ addUser ] = useAddUserMutation();
+    const { data: users, isLoading, error: fetchError } = useGetUsersQuery();
 
     const validationSchema = yup.object({
         fullName: yup
@@ -115,13 +121,17 @@ export const Signup = () => {
 
     const [dob, setDob] = useState(null);
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         delete data.file
         data.dob = new Date(data.dob).toISOString()
         console.log("Form Submitted:", data);
         alert("Form Submitted Successfully!");
-        dispatch(signup(data));
-        dispatch(signupUser(data));  // Dispatch the async action to make the API call
+        // dispatch(signup(data));
+        // dispatch(signupUser(data));  // Dispatch the async action to make the API call
+
+        const response = await addUser(data).unwrap();
+        console.log('User added successfully:', response);
+        alert('User added successfully!');
     };
 
     // Local state to manage the hobbies array as we need to make it custom 
@@ -445,7 +455,22 @@ export const Signup = () => {
                 </button>
             </form>
             <div>
-                User data from Redux store  {JSON.stringify(user)}; 
+                User data from Redux store  {JSON.stringify(user)};
+            </div>
+            {/* User List */}
+            <div className="mt-5">
+                <h3>Registered Users</h3>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : fetchError ? (
+                    <p>Error fetching users: {fetchError.message}</p>
+                ) : (
+                    <ul>
+                        {users.map((user) => (
+                            <li key={user.id}>{user.fullName} - {user.email}</li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     );
