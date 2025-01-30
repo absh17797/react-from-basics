@@ -37,6 +37,10 @@ import { Signup } from '../pages/Signup';
 import StudentForm from '../pages/StudentForm';
 
 
+import SignUp2 from "../pages/SignUp2";
+import Login from "../pages/Login";
+import Welcome from "../pages/Welcome";
+
 const AppRouter = () => {
   return (
     <Router>
@@ -78,6 +82,12 @@ const AppRouter = () => {
 
         {/* Protected Routes */}
         <Route path="/admin" element={<ProtectedRoutes role="admin"><Dashboard /></ProtectedRoutes>} />
+
+        {/* Login Signup App Routess */}
+        <Route path="/signup2" element={<SignUp2 />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<Welcome />} />
+
       </Routes>
       {/* <Footer /> */}
     </Router>
