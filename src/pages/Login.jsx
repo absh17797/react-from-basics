@@ -12,7 +12,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     const response = await login(data).unwrap();
-    dispatch(setUser(response));
+    dispatch(setUser(response.data));
     navigate("/welcome");
   };
 

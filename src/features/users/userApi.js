@@ -4,7 +4,8 @@ export const userAPI = createApi({
   reducerPath: 'users',
   baseQuery: fetchBaseQuery({ 
     // baseUrl: 'https://677cf2334496848554c84e31.mockapi.io/api/v1' 
-    baseUrl: 'http://localhost:5000/api/users',
+    // baseUrl: 'http://localhost:5000/api/users',
+    baseUrl: 'https://users-auth-mern.onrender.com/api',    
     withCredentials: false,
   }), // Replace with your actual API base URL
   tagTypes: ['User'], // Define tag types

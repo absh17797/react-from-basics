@@ -11,7 +11,6 @@ const TodoList = () => {
     ]);
 
     useEffect(() => {
-        console.log("location.state=>",location.state)
         if (location?.state) {
             setTodos((prevTodos) => [...prevTodos, Object.assign(location?.state,{id: todos.length + 1 })]);
         }

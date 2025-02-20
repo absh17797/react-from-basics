@@ -10,18 +10,17 @@ const authSlice = createSlice({
   },
   reducers: {
     signup: (state, action) => {
-        console.log("action.payload-->", action.payload)
-        state.user = action.payload;
+        state.user = action?.payload;
     },
     login: (state, action) => {
-        state.user = action.payload;
+        state.user = action?.payload;
     },
     logout: (state) => {
         state.user = null;
     },
     setUser: (state, action) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.user = action?.payload?.user;
+      state.token = action?.payload?.token;
     },
     logout: (state) => {
       state.user = null;
@@ -33,17 +32,14 @@ const authSlice = createSlice({
     builder
       .addCase(signupUser.pending, (state) => {
         state.status = 'loading';
-        console.log("Signup loading..."); 
       })
       .addCase(signupUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload;
-        console.log("Signup succeeded, user data:", action.payload);
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || action.error.message;
-        console.log("Signup failed, error:", action.error.message); 
       });
   },
 });

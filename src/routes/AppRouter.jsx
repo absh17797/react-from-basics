@@ -77,14 +77,14 @@ const AppRouter = () => {
 
         {/* Assignment 3 - Use Context */}
         <Route path="/products" element={<PublicRoutes><Products /></PublicRoutes>} />
-        <Route path="/signUp" element={<PublicRoutes><Signup /></PublicRoutes>} />
+        <Route path="/signUp" element={<PublicRoutes><SignUp2 /></PublicRoutes>} />
         <Route path="/studentForm" element={<PublicRoutes><StudentForm /></PublicRoutes>} />
 
         {/* Protected Routes */}
         <Route path="/admin" element={<ProtectedRoutes role="admin"><Dashboard /></ProtectedRoutes>} />
 
         {/* Login Signup App Routess */}
-        <Route path="/signup2" element={<SignUp2 />} />
+        <Route path="/signup2" element={<PublicRoutes><Signup /></PublicRoutes>} />
         <Route path="/login" element={<Login />} />
         <Route path="/welcome" element={<Welcome />} />
 

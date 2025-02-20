@@ -125,7 +125,6 @@ export const Signup = () => {
         delete data.file
         data.dob = new Date(data.dob).toISOString()
         console.log("Form Submitted:", data);
-        alert("Form Submitted Successfully!");
         // dispatch(signup(data));
         // dispatch(signupUser(data));  // Dispatch the async action to make the API call
 
@@ -146,7 +145,6 @@ export const Signup = () => {
             // Remove the hobby object
             updatedHobbies = hobbies?.filter((hobby) => hobby?.title !== value);
         }
-        console.log("updatedHobbies ==>", updatedHobbies)
 
         setHobbies(updatedHobbies); // Update local state
         setValue("hobbies", updatedHobbies); // Update React Hook Form state
